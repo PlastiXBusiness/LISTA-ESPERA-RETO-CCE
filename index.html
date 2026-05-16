@@ -3,17 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuestionario Lista de Espera — El Reto de los $600</title>
+<title>Lista de Espera — El Reto de los $600</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-fill-color: inherit;
+}
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  color: #1a1a1a;
+  border-radius: 0;
+}
+input, textarea, select {
+  -webkit-appearance: none;
+  appearance: none;
+  color: #1a1a1a;
+  border-radius: 0;
+}
 body {
   font-family: Georgia, 'Times New Roman', serif;
   background: #f4f1ec;
   color: #1a1a1a;
   padding: 40px 20px 80px;
+  -webkit-font-smoothing: antialiased;
 }
-
 .container { max-width: 680px; margin: 0 auto; }
 
 /* HEADER */
@@ -23,17 +40,18 @@ body {
   padding-bottom: 24px;
 }
 .form-header h1 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: normal;
   line-height: 1.3;
   margin-bottom: 10px;
+  color: #1a1a1a;
 }
-.form-header .subtitle {
+.form-header p {
   font-size: 13px;
   color: #666;
   line-height: 1.7;
 }
-.form-header .time-badge {
+.time-badge {
   display: inline-block;
   margin-top: 12px;
   font-size: 11px;
@@ -44,348 +62,157 @@ body {
 }
 
 /* PROGRESS */
-.progress-wrap {
-  margin-bottom: 32px;
-}
-.progress-label {
-  font-size: 11px;
-  font-family: 'Courier New', monospace;
-  color: #999;
-  margin-bottom: 6px;
-}
-.progress-bar-bg {
-  height: 3px;
-  background: #ddd;
-}
-.progress-bar-fill {
-  height: 3px;
-  background: #1a1a1a;
-  transition: width 0.3s;
-}
+.progress-wrap { margin-bottom: 32px; }
+.progress-label { font-size: 11px; font-family: 'Courier New', monospace; color: #999; margin-bottom: 6px; }
+.progress-bg { height: 3px; background: #ddd; }
+.progress-fill { height: 3px; background: #1a1a1a; transition: width 0.3s; }
 
-/* SECTION LABEL */
-.section-label {
-  font-size: 11px;
-  font-family: 'Courier New', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #999;
-  margin-bottom: 6px;
-}
-.section-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 4px;
-  line-height: 1.3;
-}
-.section-desc {
-  font-size: 13px;
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-/* BLOCK */
-.block { margin-bottom: 50px; }
-.divider {
-  border: none;
-  border-top: 1px solid #d0c9bc;
-  margin: 40px 0;
-}
+/* SECTION */
+.section { margin-bottom: 50px; }
+.section-tag { font-size: 10px; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 0.1em; color: #999; margin-bottom: 5px; }
+.section-title { font-size: 18px; font-weight: bold; margin-bottom: 4px; line-height: 1.3; color: #1a1a1a; }
+.section-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 22px; }
+.divider { border: none; border-top: 1px solid #d0c9bc; margin: 40px 0; }
 
 /* QUESTION */
-.q {
-  background: #fff;
-  border: 1px solid #d0c9bc;
-  padding: 20px;
-  margin-bottom: 14px;
+.q { background: #fff; border: 1px solid #d0c9bc; padding: 20px; margin-bottom: 14px; }
+.q-code { font-size: 10px; font-family: 'Courier New', monospace; color: #ccc; display: block; margin-bottom: 6px; }
+.q-text { font-size: 14px; font-weight: bold; line-height: 1.5; margin-bottom: 4px; color: #1a1a1a; }
+.q-hint { font-size: 12px; color: #888; font-style: italic; margin-bottom: 14px; line-height: 1.5; border-left: 2px solid #e8e3da; padding-left: 10px; }
+
+/* CHOICE */
+.choice-list { display: flex; flex-direction: column; gap: 7px; }
+.choice-btn {
+  padding: 10px 14px; border: 1px solid #d0c9bc; background: #f4f1ec;
+  text-align: left; font-size: 13px; font-family: Georgia, serif;
+  cursor: pointer; line-height: 1.4; transition: background 0.1s;
+  color: #1a1a1a; -webkit-appearance: none; display: block; width: 100%;
 }
-.q-code {
-  font-size: 10px;
-  font-family: 'Courier New', monospace;
-  color: #bbb;
-  display: block;
-  margin-bottom: 6px;
-}
-.q-text {
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 4px;
-  font-weight: bold;
-}
-.q-hint {
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-  margin-bottom: 14px;
-  line-height: 1.5;
-}
+.choice-btn:hover { background: #e8e3da; }
+.choice-btn.sel { background: #1a1a1a; color: #f4f1ec; border-color: #1a1a1a; }
 
 /* SCALE */
-.scale-row {
-  display: flex;
-  gap: 0;
-  border: 1px solid #d0c9bc;
-  width: fit-content;
-  margin-bottom: 4px;
-}
+.scale-instr { font-size: 10px; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 0.07em; color: #aaa; margin-bottom: 8px; }
+.scale-row { display: flex; gap: 0; border: 1px solid #d0c9bc; width: fit-content; margin-bottom: 4px; }
 .scale-btn {
-  width: 52px; height: 46px;
-  border: none;
-  border-right: 1px solid #d0c9bc;
-  background: #f4f1ec;
-  font-size: 15px;
-  font-family: Georgia, serif;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.1s;
+  width: 52px; height: 46px; border: none; border-right: 1px solid #d0c9bc;
+  background: #f4f1ec; font-size: 15px; font-weight: bold; font-family: Georgia, serif;
+  cursor: pointer; transition: background 0.1s; color: #1a1a1a; -webkit-appearance: none;
 }
 .scale-btn:last-child { border-right: none; }
 .scale-btn:hover { background: #e8e3da; }
-.scale-btn.s1 { background: #d8f0c0; color: #2a5a0a; }
-.scale-btn.s2 { background: #c8e898; color: #2a5a0a; }
-.scale-btn.s3 { background: #ffe8a0; color: #7a4a00; }
-.scale-btn.s4 { background: #ffc880; color: #8a2a00; }
-.scale-btn.s5 { background: #ffb0b0; color: #8a1010; }
-.scale-labels-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  color: #aaa;
-  font-family: 'Courier New', monospace;
-  width: 260px;
-  margin-bottom: 6px;
-}
-.scale-feedback {
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-  min-height: 18px;
-}
+.scale-btn.v1 { background: #d8f0c0; color: #2a5a0a; }
+.scale-btn.v2 { background: #c8e898; color: #2a5a0a; }
+.scale-btn.v3 { background: #ffe8a0; color: #7a4a00; }
+.scale-btn.v4 { background: #ffc880; color: #8a2a00; }
+.scale-btn.v5 { background: #ffb0b0; color: #8a1010; }
+.scale-ends { display: flex; justify-content: space-between; width: 260px; font-size: 10px; color: #aaa; font-family: 'Courier New', monospace; margin-bottom: 5px; }
+.scale-desc { font-size: 12px; color: #888; font-style: italic; min-height: 18px; }
 
-/* CHOICE */
-.choice-list {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-.choice-item {
-  padding: 10px 14px;
-  border: 1px solid #d0c9bc;
-  background: #f4f1ec;
-  font-size: 13px;
-  cursor: pointer;
-  line-height: 1.4;
-  transition: background 0.1s;
-  text-align: left;
-  font-family: Georgia, serif;
-}
-.choice-item:hover { background: #e8e3da; }
-.choice-item.sel {
-  background: #1a1a1a;
-  color: #f4f1ec;
-  border-color: #1a1a1a;
-}
-.multi-hint {
-  font-size: 11px;
-  font-family: 'Courier New', monospace;
-  color: #aaa;
-  margin-bottom: 8px;
-}
-
-/* RANK */
-.rank-intro {
-  font-size: 12px;
-  color: #888;
-  font-style: italic;
-  margin-bottom: 10px;
-}
-.rank-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.rank-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border: 1px solid #d0c9bc;
-  background: #f4f1ec;
-  font-size: 13px;
-}
-.rank-item .rank-btns {
-  display: flex;
-  gap: 4px;
-  flex-shrink: 0;
-}
-.rank-btn {
-  width: 32px; height: 28px;
-  border: 1px solid #ccc;
-  background: #fff;
-  font-size: 12px;
-  cursor: pointer;
-  font-family: 'Courier New', monospace;
-  transition: background 0.1s;
-}
-.rank-btn:hover { background: #eee; }
-.rank-btn.rank-sel { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-.rank-item-label { flex: 1; line-height: 1.4; }
-.rank-tag {
-  font-size: 10px;
-  font-family: 'Courier New', monospace;
-  color: #aaa;
-  flex-shrink: 0;
-}
+/* MULTI SELECT */
+.multi-hint { font-size: 11px; font-family: 'Courier New', monospace; color: #aaa; margin-bottom: 8px; }
+.choice-btn.multi-sel { background: #1a1a1a; color: #f4f1ec; border-color: #1a1a1a; }
 
 /* OPEN */
-.open-textarea {
-  width: 100%;
-  padding: 12px;
-  font-size: 13px;
-  font-family: Georgia, serif;
-  border: 1px solid #d0c9bc;
-  background: #f9f7f3;
-  color: #1a1a1a;
-  resize: vertical;
-  min-height: 70px;
+.open-input {
+  width: 100%; padding: 11px 12px; font-size: 13px; font-family: Georgia, serif;
+  border: 1px solid #d0c9bc; background: #f9f7f3; color: #1a1a1a;
+  resize: vertical; min-height: 70px; -webkit-appearance: none;
 }
-.open-textarea:focus { outline: 2px solid #1a1a1a; }
-.open-textarea.tall { min-height: 90px; }
+.open-input:focus { outline: 2px solid #1a1a1a; }
+.open-input::placeholder { color: #aaa; }
+.open-input.tall { min-height: 90px; }
 
 /* PRICE BLOCK */
 .price-block {
-  background: #1a1a1a;
-  color: #f4f1ec;
-  padding: 22px;
-  margin-bottom: 14px;
+  background: #1a1a1a; color: #f4f1ec; padding: 22px; margin-bottom: 14px;
 }
-.price-block h3 {
-  font-size: 16px;
-  font-weight: normal;
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-.price-block p {
-  font-size: 12px;
-  color: #999;
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
-.price-choice-list {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
+.price-block h3 { font-size: 15px; font-weight: normal; line-height: 1.5; margin-bottom: 8px; }
+.price-block p { font-size: 12px; color: #999; margin-bottom: 14px; line-height: 1.6; }
+.price-choice-list { display: flex; flex-direction: column; gap: 7px; }
 .price-choice {
-  padding: 10px 14px;
-  border: 1px solid #444;
-  background: #2a2a2a;
-  font-size: 13px;
-  color: #f4f1ec;
-  cursor: pointer;
-  text-align: left;
-  font-family: Georgia, serif;
-  line-height: 1.4;
-  transition: background 0.1s;
+  padding: 10px 14px; border: 1px solid #444; background: #2a2a2a;
+  font-size: 13px; color: #f4f1ec; cursor: pointer; text-align: left;
+  font-family: Georgia, serif; line-height: 1.4; transition: background 0.1s;
+  -webkit-appearance: none; display: block; width: 100%;
 }
 .price-choice:hover { background: #333; }
 .price-choice.sel { background: #f4f1ec; color: #1a1a1a; }
 
+/* TOP 3 */
+.top3-counter { margin-top: 8px; font-size: 12px; font-family: 'Courier New', monospace; color: #aaa; }
+.top3-counter.ok { color: #2a5a0a; }
+.top3-counter.warn { color: #8a1010; }
+
 /* SUBMIT */
-.submit-area { margin-top: 32px; }
 .submit-btn {
-  width: 100%;
-  padding: 16px;
-  background: #1a1a1a;
-  color: #f4f1ec;
-  border: none;
-  font-size: 15px;
-  font-family: Georgia, serif;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: background 0.15s;
+  width: 100%; padding: 16px; background: #1a1a1a; color: #f4f1ec; border: none;
+  font-size: 15px; font-family: Georgia, serif; cursor: pointer;
+  letter-spacing: 0.05em; margin-top: 32px; transition: background 0.15s; -webkit-appearance: none;
 }
 .submit-btn:hover { background: #333; }
-.submit-note {
-  font-size: 12px;
-  color: #aaa;
-  text-align: center;
-  margin-top: 10px;
-  font-style: italic;
-}
+.submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+.sending-msg { display: none; text-align: center; padding: 14px; font-size: 13px; color: #888; font-style: italic; }
+.error-msg { display: none; background: #fff0f0; border: 1px solid #f7c1c1; padding: 12px 16px; font-size: 13px; color: #8a1010; margin-top: 12px; text-align: center; }
+.submit-note { font-size: 12px; color: #aaa; text-align: center; margin-top: 10px; font-style: italic; }
 
 /* SUCCESS */
-.success-screen {
-  display: none;
-  text-align: center;
-  padding: 60px 20px;
-}
-.success-screen h2 {
-  font-size: 22px;
-  font-weight: normal;
-  margin-bottom: 12px;
-}
-.success-screen p {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.7;
-}
+.success { display: none; text-align: center; padding: 80px 20px; }
+.success h2 { font-size: 22px; font-weight: normal; margin-bottom: 12px; color: #1a1a1a; }
+.success p { font-size: 14px; color: #666; line-height: 1.7; }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+  body { padding: 24px 16px 60px; }
   .scale-btn { width: 44px; height: 42px; font-size: 13px; }
-  .scale-labels-row { width: 220px; }
+  .scale-ends { width: 220px; }
+  .form-header h1 { font-size: 20px; }
+  .section-title { font-size: 16px; }
 }
 </style>
 </head>
 <body>
-<div class="container" id="formContainer">
+<div class="container" id="main">
 
-  <!-- HEADER -->
   <div class="form-header">
-    <h1>Antes de abrir El Reto de los $600...<br>ayudanos a mejorarlo para ti</h1>
-    <p class="subtitle">Eres parte de nuestra lista de espera. Este cuestionario nos toma 6 minutos y nos ayuda a disenar exactamente lo que necesitas — no lo que creemos que necesitas.</p>
+    <h1>Lista de Espera<br>El Reto de los $600</h1>
+    <p>Antes de abrir el Reto, queremos conocerte mejor para mejorarlo. Este cuestionario nos ayuda a disenaerlo exactamente para ti — no para lo que creemos que necesitas.</p>
     <span class="time-badge">6 minutos — 5 secciones</span>
   </div>
 
-  <!-- PROGRESS -->
   <div class="progress-wrap">
-    <div class="progress-label" id="progressLabel">Seccion 1 de 5</div>
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fill" id="progressFill" style="width: 20%"></div>
-    </div>
+    <div class="progress-label" id="progLabel">Seccion 1 de 5</div>
+    <div class="progress-bg"><div class="progress-fill" id="progFill" style="width:20%"></div></div>
   </div>
 
-  <!-- ===================== -->
+  <!-- ======================== -->
   <!-- SECCION 1: TU SITUACION -->
-  <!-- ===================== -->
-  <div class="block" id="sec1">
-    <div class="section-label">Seccion 1 de 5</div>
+  <!-- ======================== -->
+  <div class="section" id="s1">
+    <div class="section-tag">Seccion 1 de 5</div>
     <div class="section-title">Tu punto de partida</div>
-    <div class="section-desc">Sin saber donde estas ahora mismo, no podemos saber que parte del sistema necesitas mas. Estas respuestas son las mas importantes.</div>
+    <div class="section-desc">Sin saber donde estas ahora mismo, no podemos saber que parte del sistema necesitas mas.</div>
 
     <div class="q">
       <span class="q-code">1.1</span>
       <p class="q-text">¿Cuanto necesitas ganar al mes para que esto valga la pena para ti?</p>
-      <p class="q-hint">No hay respuesta correcta. Solo quieremos saber tu numero real.</p>
+      <p class="q-hint">No hay respuesta correcta. Solo queremos saber tu numero real.</p>
       <div class="choice-list">
-        <button class="choice-item" onclick="pick(this, '1.1')">Menos de 300 EUR al mes — con eso ya me cambia la vida</button>
-        <button class="choice-item" onclick="pick(this, '1.1')">Entre 300 y 600 EUR al mes — un buen sobresueldo</button>
-        <button class="choice-item" onclick="pick(this, '1.1')">Entre 600 y 1.500 EUR al mes — quiero que sea mi negocio principal</button>
-        <button class="choice-item" onclick="pick(this, '1.1')">Mas de 1.500 EUR al mes — o no merece mi tiempo</button>
+        <button class="choice-btn" onclick="pick(this,'1_1')">Menos de 300 EUR al mes — con eso ya me cambia la vida</button>
+        <button class="choice-btn" onclick="pick(this,'1_1')">Entre 300 y 600 EUR al mes — un buen sobresueldo</button>
+        <button class="choice-btn" onclick="pick(this,'1_1')">Entre 600 y 1.500 EUR al mes — quiero que sea mi negocio principal</button>
+        <button class="choice-btn" onclick="pick(this,'1_1')">Mas de 1.500 EUR al mes — o no merece mi tiempo</button>
       </div>
     </div>
 
     <div class="q">
       <span class="q-code">1.2</span>
       <p class="q-text">¿Cual es tu mayor miedo al unirte a un sistema como este?</p>
-      <p class="q-hint">Marca la que mas se acerque a lo que sientes de verdad.</p>
       <div class="choice-list">
-        <button class="choice-item" onclick="pick(this, '1.2')">Perder el dinero que invierto y no recuperarlo</button>
-        <button class="choice-item" onclick="pick(this, '1.2')">Hacer el ridiculo o quedar mal delante de mis contactos</button>
-        <button class="choice-item" onclick="pick(this, '1.2')">Pasar mucho tiempo y esfuerzo y que no funcione</button>
-        <button class="choice-item" onclick="pick(this, '1.2')">Que sea una estafa o algo que no sea completamente legal</button>
-        <button class="choice-item" onclick="pick(this, '1.2')">No entender el negocio y no saber explicarselo a nadie</button>
+        <button class="choice-btn" onclick="pick(this,'1_2')">Perder el dinero que invierto y no recuperarlo</button>
+        <button class="choice-btn" onclick="pick(this,'1_2')">Hacer el ridiculo o quedar mal delante de mis contactos</button>
+        <button class="choice-btn" onclick="pick(this,'1_2')">Pasar mucho tiempo y esfuerzo y que no funcione</button>
+        <button class="choice-btn" onclick="pick(this,'1_2')">Que sea una estafa o algo que no sea completamente legal</button>
+        <button class="choice-btn" onclick="pick(this,'1_2')">No entender el negocio y no saber explicarselo a nadie</button>
       </div>
     </div>
 
@@ -393,10 +220,10 @@ body {
       <span class="q-code">1.3</span>
       <p class="q-text">¿Cuantas horas a la semana podrias dedicarle a esto de forma realista?</p>
       <div class="choice-list">
-        <button class="choice-item" onclick="pick(this, '1.3')">Menos de 3 horas — tengo muy poco tiempo libre</button>
-        <button class="choice-item" onclick="pick(this, '1.3')">Entre 3 y 7 horas — podria sacar un rato al dia</button>
-        <button class="choice-item" onclick="pick(this, '1.3')">Entre 7 y 15 horas — estoy bastante motivado</button>
-        <button class="choice-item" onclick="pick(this, '1.3')">Mas de 15 horas — quiero ir en serio desde el principio</button>
+        <button class="choice-btn" onclick="pick(this,'1_3')">Menos de 3 horas — tengo muy poco tiempo libre</button>
+        <button class="choice-btn" onclick="pick(this,'1_3')">Entre 3 y 7 horas — podria sacar un rato al dia</button>
+        <button class="choice-btn" onclick="pick(this,'1_3')">Entre 7 y 15 horas — estoy bastante motivado</button>
+        <button class="choice-btn" onclick="pick(this,'1_3')">Mas de 15 horas — quiero ir en serio desde el principio</button>
       </div>
     </div>
 
@@ -404,172 +231,184 @@ body {
       <span class="q-code">1.4</span>
       <p class="q-text">Antes de conocer El Reto de los $600, ¿habia intentado algun otro negocio extra o fuente de ingresos?</p>
       <div class="choice-list">
-        <button class="choice-item" onclick="pick(this, '1.4')">No, esto seria la primera vez que intento algo asi</button>
-        <button class="choice-item" onclick="pick(this, '1.4')">Si, lo intente pero no consegui resultados</button>
-        <button class="choice-item" onclick="pick(this, '1.4')">Si, consegui algo pero no fue suficiente o lo abandone</button>
-        <button class="choice-item" onclick="pick(this, '1.4')">Tengo experiencia en ventas o en negocios propios</button>
+        <button class="choice-btn" onclick="pick(this,'1_4')">No, esto seria la primera vez que intento algo asi</button>
+        <button class="choice-btn" onclick="pick(this,'1_4')">Si, lo intente pero no consegui resultados</button>
+        <button class="choice-btn" onclick="pick(this,'1_4')">Si, consegui algo pero no fue suficiente o lo abandone</button>
+        <button class="choice-btn" onclick="pick(this,'1_4')">Tengo experiencia en ventas o en negocios propios</button>
       </div>
+    </div>
+
+    <div class="q">
+      <span class="q-code">1.5</span>
+      <p class="q-text">¿En que pais vives?</p>
+      <input type="text" id="pais" class="open-input" style="min-height:auto;padding:10px 12px;" placeholder="Escribe tu pais...">
     </div>
   </div>
 
   <hr class="divider">
 
-  <!-- ===================== -->
-  <!-- SECCION 2: CURA VS DOLOR -->
-  <!-- ===================== -->
-  <div class="block" id="sec2">
-    <div class="section-label">Seccion 2 de 5</div>
-    <div class="section-title">Los componentes de la oferta — ¿te salvan o no te dicen nada?</div>
-    <div class="section-desc">Te mostramos cada parte de El Reto de los $600. Para cada una, dimenos cuanto te alivia el problema que tienes. Sé honesto — si algo no te dice nada, dilo.</div>
+  <!-- ======================== -->
+  <!-- SECCION 2: COMPONENTES -->
+  <!-- ======================== -->
+  <div class="section" id="s2">
+    <div class="section-tag">Seccion 2 de 5</div>
+    <div class="section-title">Los componentes del sistema — ¿te salvan o no te dicen nada?</div>
+    <div class="section-desc">Para cada parte del sistema, dimenos cuanto te alivia el problema que tienes. Si algo no te dice nada, dilo.</div>
 
     <div class="q">
       <span class="q-code">2.1</span>
-      <p class="q-text">"Sistema A-Z: Consigue Tu Primer $600" — un sistema paso a paso desarrollado tras 4,5 millones en ventas que te dice exactamente que hacer cada dia.</p>
-      <p class="q-hint">¿Cuanto te alivia saber que existe un sistema probado que te dice exactamente que hacer, en vez de tener que descubrirlo tu solo?</p>
+      <p class="q-text">Sistema A-Z paso a paso — desarrollado tras 4,5 millones en ventas, te dice exactamente que hacer cada dia desde cero.</p>
+      <p class="q-hint">¿Cuanto te alivia saber que hay un sistema probado que te dice exactamente que hacer, en vez de tener que descubrirlo solo?</p>
+      <div class="scale-instr">1 = No me alivia nada · 5 = Me lo resuelve todo</div>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'2.1')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.1')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.1')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.1')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.1')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'2_1')">1</button>
+        <button class="scale-btn" onclick="sc(this,'2_1')">2</button>
+        <button class="scale-btn" onclick="sc(this,'2_1')">3</button>
+        <button class="scale-btn" onclick="sc(this,'2_1')">4</button>
+        <button class="scale-btn" onclick="sc(this,'2_1')">5</button>
       </div>
-      <div class="scale-labels-row"><span>No me alivia nada</span><span>Me lo resuelve todo</span></div>
-      <div class="scale-feedback" id="sf-2.1"></div>
+      <div class="scale-ends"><span>No me alivia</span><span>Me lo resuelve</span></div>
+      <div class="scale-desc" id="sd-2_1"></div>
     </div>
 
     <div class="q">
       <span class="q-code">2.2</span>
-      <p class="q-text">"Kit de Primer Contacto: Mensajes y Materiales Listos" — scripts de mensaje en 3 versiones ya escritos para que solo tengas que enviarlos sin tener que inventar nada.</p>
-      <p class="q-hint">¿Cuanto te alivia no tener que pensar que decir ni como decirlo — que el mensaje ya este escrito y probado?</p>
+      <p class="q-text">Kit de mensajes listos — scripts en 3 versiones ya escritos para que solo tengas que enviarlos, sin tener que inventar que decir.</p>
+      <p class="q-hint">¿Cuanto te alivia no tener que pensar que decir ni como decirlo?</p>
+      <div class="scale-instr">1 = No me alivia nada · 5 = Me lo resuelve todo</div>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'2.2')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.2')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.2')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.2')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.2')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'2_2')">1</button>
+        <button class="scale-btn" onclick="sc(this,'2_2')">2</button>
+        <button class="scale-btn" onclick="sc(this,'2_2')">3</button>
+        <button class="scale-btn" onclick="sc(this,'2_2')">4</button>
+        <button class="scale-btn" onclick="sc(this,'2_2')">5</button>
       </div>
-      <div class="scale-labels-row"><span>No me alivia nada</span><span>Me lo resuelve todo</span></div>
-      <div class="scale-feedback" id="sf-2.2"></div>
+      <div class="scale-ends"><span>No me alivia</span><span>Me lo resuelve</span></div>
+      <div class="scale-desc" id="sd-2_2"></div>
     </div>
 
     <div class="q">
       <span class="q-code">2.3</span>
-      <p class="q-text">"Guia: Responde Cualquier Objecion en 60 Segundos" — respuestas exactas para cuando alguien te diga "parece una estafa", "no me interesa" o "no tengo dinero".</p>
+      <p class="q-text">Guia de objeciones — respuestas exactas para cuando alguien te diga "parece una estafa", "no me interesa" o "no tengo dinero".</p>
       <p class="q-hint">¿Cuanto te alivia tener ya preparada la respuesta para cuando alguien te ponga en duda, en vez de quedarte en blanco?</p>
+      <div class="scale-instr">1 = No me alivia nada · 5 = Me lo resuelve todo</div>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'2.3')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.3')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.3')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.3')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.3')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'2_3')">1</button>
+        <button class="scale-btn" onclick="sc(this,'2_3')">2</button>
+        <button class="scale-btn" onclick="sc(this,'2_3')">3</button>
+        <button class="scale-btn" onclick="sc(this,'2_3')">4</button>
+        <button class="scale-btn" onclick="sc(this,'2_3')">5</button>
       </div>
-      <div class="scale-labels-row"><span>No me alivia nada</span><span>Me lo resuelve todo</span></div>
-      <div class="scale-feedback" id="sf-2.3"></div>
+      <div class="scale-ends"><span>No me alivia</span><span>Me lo resuelve</span></div>
+      <div class="scale-desc" id="sd-2_3"></div>
     </div>
 
     <div class="q">
       <span class="q-code">2.4</span>
-      <p class="q-text">"Tu Sistema de Cierre Automatico" — una pagina web con tu nombre que presenta el negocio a tus contactos y los lleva a comprar, sin que tengas que explicar nada tu.</p>
+      <p class="q-text">Sistema de cierre automatico — una pagina web con tu nombre que presenta el negocio a tus contactos y los lleva a comprar, sin que tengas que explicar nada tu.</p>
       <p class="q-hint">¿Cuanto te alivia que el sistema "venda" por ti — que no tengas que ser tu el que convenza a nadie?</p>
+      <div class="scale-instr">1 = No me alivia nada · 5 = Me lo resuelve todo</div>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'2.4')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.4')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.4')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.4')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.4')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'2_4')">1</button>
+        <button class="scale-btn" onclick="sc(this,'2_4')">2</button>
+        <button class="scale-btn" onclick="sc(this,'2_4')">3</button>
+        <button class="scale-btn" onclick="sc(this,'2_4')">4</button>
+        <button class="scale-btn" onclick="sc(this,'2_4')">5</button>
       </div>
-      <div class="scale-labels-row"><span>No me alivia nada</span><span>Me lo resuelve todo</span></div>
-      <div class="scale-feedback" id="sf-2.4"></div>
+      <div class="scale-ends"><span>No me alivia</span><span>Me lo resuelve</span></div>
+      <div class="scale-desc" id="sd-2_4"></div>
     </div>
 
     <div class="q">
       <span class="q-code">2.5</span>
-      <p class="q-text">"Tu Asistente Personal 24/7" — un asistente digital disponible a cualquier hora para responder todas tus dudas sobre el negocio, los creditos y el sistema al instante.</p>
-      <p class="q-hint">¿Cuanto te alivia saber que puedes preguntar cualquier duda en cualquier momento sin esperar dias a que alguien te responda?</p>
+      <p class="q-text">Asistente personal 24/7 — disponible a cualquier hora para responder todas tus dudas sobre el negocio y el sistema al instante.</p>
+      <p class="q-hint">¿Cuanto te alivia saber que puedes preguntar cualquier duda en cualquier momento sin esperar a que alguien te responda?</p>
+      <div class="scale-instr">1 = No me alivia nada · 5 = Me lo resuelve todo</div>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'2.5')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.5')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.5')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.5')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.5')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'2_5')">1</button>
+        <button class="scale-btn" onclick="sc(this,'2_5')">2</button>
+        <button class="scale-btn" onclick="sc(this,'2_5')">3</button>
+        <button class="scale-btn" onclick="sc(this,'2_5')">4</button>
+        <button class="scale-btn" onclick="sc(this,'2_5')">5</button>
       </div>
-      <div class="scale-labels-row"><span>No me alivia nada</span><span>Me lo resuelve todo</span></div>
-      <div class="scale-feedback" id="sf-2.5"></div>
+      <div class="scale-ends"><span>No me alivia</span><span>Me lo resuelve</span></div>
+      <div class="scale-desc" id="sd-2_5"></div>
     </div>
 
     <div class="q">
       <span class="q-code">2.6</span>
-      <p class="q-text">"Formacion Completa del Negocio" — un video que explica en lenguaje simple quien es Corsair, como funciona el negocio y como explicarselo a cualquier persona en menos de 5 minutos.</p>
-      <p class="q-hint">¿Cuanto te alivia tener una explicacion clara y simple del negocio que puedas entender y luego repetir con tus propias palabras?</p>
+      <p class="q-text">Formacion completa del negocio — un video que explica en lenguaje simple quien es Corsair y como explicarselo a cualquier persona en menos de 5 minutos.</p>
+      <p class="q-hint">¿Cuanto te alivia tener una explicacion clara que puedas entender y luego repetir con tus propias palabras?</p>
+      <div class="scale-instr">1 = No me alivia nada · 5 = Me lo resuelve todo</div>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'2.6')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.6')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.6')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.6')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.6')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'2_6')">1</button>
+        <button class="scale-btn" onclick="sc(this,'2_6')">2</button>
+        <button class="scale-btn" onclick="sc(this,'2_6')">3</button>
+        <button class="scale-btn" onclick="sc(this,'2_6')">4</button>
+        <button class="scale-btn" onclick="sc(this,'2_6')">5</button>
       </div>
-      <div class="scale-labels-row"><span>No me alivia nada</span><span>Me lo resuelve todo</span></div>
-      <div class="scale-feedback" id="sf-2.6"></div>
+      <div class="scale-ends"><span>No me alivia</span><span>Me lo resuelve</span></div>
+      <div class="scale-desc" id="sd-2_6"></div>
     </div>
 
     <div class="q">
       <span class="q-code">2.7</span>
-      <p class="q-text">"El Acelerador de Primera Venta" — sesion grupal en directo cada semana donde trabajamos contigo para cerrar tu primera venta, con roleplay real y respuestas en tiempo real.</p>
-      <p class="q-hint">¿Cuanto te alivia tener un momento fijo a la semana donde alguien te ayuda en directo en vez de aprender solo?</p>
+      <p class="q-text">Sesion en directo semanal — trabajamos contigo en directo cada semana para cerrar tu primera venta, con roleplay real y respuestas en tiempo real.</p>
+      <p class="q-hint">¿Cuanto te alivia tener un momento fijo a la semana donde alguien te ayuda en directo?</p>
+      <div class="scale-instr">1 = No me alivia nada · 5 = Me lo resuelve todo</div>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'2.7')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.7')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.7')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.7')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'2.7')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'2_7')">1</button>
+        <button class="scale-btn" onclick="sc(this,'2_7')">2</button>
+        <button class="scale-btn" onclick="sc(this,'2_7')">3</button>
+        <button class="scale-btn" onclick="sc(this,'2_7')">4</button>
+        <button class="scale-btn" onclick="sc(this,'2_7')">5</button>
       </div>
-      <div class="scale-labels-row"><span>No me alivia nada</span><span>Me lo resuelve todo</span></div>
-      <div class="scale-feedback" id="sf-2.7"></div>
+      <div class="scale-ends"><span>No me alivia</span><span>Me lo resuelve</span></div>
+      <div class="scale-desc" id="sd-2_7"></div>
     </div>
   </div>
 
   <hr class="divider">
 
-  <!-- ===================== -->
-  <!-- SECCION 3: ESCEPTICISMO Y PRECIO -->
-  <!-- ===================== -->
-  <div class="block" id="sec3">
-    <div class="section-label">Seccion 3 de 5</div>
+  <!-- ======================== -->
+  <!-- SECCION 3: PRECIO -->
+  <!-- ======================== -->
+  <div class="section" id="s3">
+    <div class="section-tag">Seccion 3 de 5</div>
     <div class="section-title">El precio y lo que vale — seamos honestos</div>
-    <div class="section-desc">Estas preguntas pueden incomodar un poco. Son las mas importantes para nosotros. No hay respuesta "buena".</div>
+    <div class="section-desc">Estas preguntas pueden incomodar un poco. Son las mas importantes para nosotros.</div>
 
     <div class="price-block">
       <h3>El Reto de los $600 incluye 15 componentes con un valor total de $2.857.<br>El precio de acceso es $17.</h3>
-      <p>Antes de preguntar, queremos que tengas esa cifra en mente.</p>
+      <p>Ten esa cifra en mente antes de responder.</p>
     </div>
 
     <div class="q">
       <span class="q-code">3.1</span>
       <p class="q-text">Cuando ves "$17 por algo que vale $2.857", ¿que pensamiento aparece primero en tu cabeza?</p>
-      <p class="q-hint">Marca la opcion mas honesta, no la mas "correcta".</p>
+      <p class="q-hint">Marca la opcion mas honesta, no la mas correcta.</p>
       <div class="price-choice-list">
-        <button class="price-choice" onclick="pickPrice(this,'3.1')">"Si es tan barato, algo falla. Los valores no son reales."</button>
-        <button class="price-choice" onclick="pickPrice(this,'3.1')">"A $17 no tengo nada que perder. Lo pruebo sin dudar."</button>
-        <button class="price-choice" onclick="pickPrice(this,'3.1')">"El precio no me genera desconfianza, pero los valores me parecen exagerados."</button>
-        <button class="price-choice" onclick="pickPrice(this,'3.1')">"Entiendo la logica — es un gancho para que entre y luego vea el negocio."</button>
-        <button class="price-choice" onclick="pickPrice(this,'3.1')">"Me genera curiosidad. Quiero entender por que es tan barato."</button>
+        <button class="price-choice" onclick="pickPrice(this,'3_1')">"Si es tan barato, algo falla. Los valores no son reales."</button>
+        <button class="price-choice" onclick="pickPrice(this,'3_1')">"A $17 no tengo nada que perder. Lo pruebo sin dudar."</button>
+        <button class="price-choice" onclick="pickPrice(this,'3_1')">"El precio no me genera desconfianza, pero los valores me parecen exagerados."</button>
+        <button class="price-choice" onclick="pickPrice(this,'3_1')">"Entiendo la logica — es un gancho para que entre y luego vea el negocio."</button>
+        <button class="price-choice" onclick="pickPrice(this,'3_1')">"Me genera curiosidad. Quiero entender por que es tan barato."</button>
       </div>
     </div>
 
     <div class="q">
       <span class="q-code">3.2</span>
-      <p class="q-text">De los valores asignados a cada componente, ¿cuales te parecen reales y cuales te parecen inflados para que el total parezca grande?</p>
-      <p class="q-hint">Marca todos los que sientas que estan sobrevalorados.</p>
+      <p class="q-text">De los valores asignados a cada componente, ¿cuales te parecen inflados para que el total parezca grande?</p>
       <div class="multi-hint">Puedes marcar varios</div>
       <div class="choice-list">
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">"Sistema A-Z" a $997 — me parece un valor real</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">"Tu Asistente Personal 24/7" a $497 — me parece inflado para un chatbot</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">"Tu Sistema de Cierre Automatico" (landing) a $297 — me parece razonable</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">"Acelerador de Primera Venta" (sesion en directo) a $197 — me parece real</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">"Guia de Objeciones" a $147 — me parece inflado para un PDF</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">"El Mapa de 14 Dias" a $97 — me parece inflado</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">En general todos los valores me parecen creibles</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'3.2')">En general todos me parecen inflados — el total no me lo creo</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">"Sistema A-Z" a $997 — me parece un valor real</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">"Asistente Personal 24/7" a $497 — me parece inflado para un chatbot</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">"Sistema de Cierre Automatico" a $297 — me parece razonable</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">"Sesion en directo semanal" a $197 — me parece real</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">"Guia de Objeciones" a $147 — me parece inflado para un PDF</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">"El Mapa de 14 Dias" a $97 — me parece inflado</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">En general todos los valores me parecen creibles</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'3_2')">En general todos me parecen inflados — el total no me lo creo</button>
       </div>
     </div>
 
@@ -577,252 +416,290 @@ body {
       <span class="q-code">3.3</span>
       <p class="q-text">Si el precio fuera $97 en vez de $17, ¿cambiaria tu percepcion de la calidad del sistema?</p>
       <div class="choice-list">
-        <button class="choice-item" onclick="pick(this,'3.3')">Si — a $97 me lo tomaria mas en serio desde el principio</button>
-        <button class="choice-item" onclick="pick(this,'3.3')">No — el precio no cambia si el sistema es bueno o malo</button>
-        <button class="choice-item" onclick="pick(this,'3.3')">A $97 ya pensaria dos veces si merece la pena arriesgar</button>
-        <button class="choice-item" onclick="pick(this,'3.3')">A $17 entro mas facil y luego juzgo. Es la decision correcta de precio.</button>
+        <button class="choice-btn" onclick="pick(this,'3_3')">Si — a $97 me lo tomaria mas en serio desde el principio</button>
+        <button class="choice-btn" onclick="pick(this,'3_3')">No — el precio no cambia si el sistema es bueno o malo</button>
+        <button class="choice-btn" onclick="pick(this,'3_3')">A $97 ya pensaria dos veces si merece la pena arriesgar</button>
+        <button class="choice-btn" onclick="pick(this,'3_3')">A $17 entro mas facil y luego juzgo — es la decision correcta de precio</button>
       </div>
     </div>
 
     <div class="q">
       <span class="q-code">3.4</span>
-      <p class="q-text">¿Hay algun componente de la oferta que te genere MAS desconfianza que los demas — que te haga pensar "esto no puede ser verdad"?</p>
-      <p class="q-hint">Si hay algo que te chirria especialmente, dilo con libertad.</p>
-      <textarea class="open-textarea" placeholder="Por ejemplo: el chatbot 24/7, la landing personalizada, las sesiones en directo, los valores asignados... o lo que sea que no te cuadra."></textarea>
+      <p class="q-text">¿Hay algun componente que te genere MAS desconfianza que los demas — que te haga pensar "esto no puede ser verdad"?</p>
+      <textarea id="desconfianza" class="open-input" placeholder="Por ejemplo: el chatbot 24/7, la landing personalizada, las sesiones en directo, los valores asignados..."></textarea>
     </div>
   </div>
 
   <hr class="divider">
 
-  <!-- ===================== -->
+  <!-- ======================== -->
   <!-- SECCION 4: COMPRENSION -->
-  <!-- ===================== -->
-  <div class="block" id="sec4">
-    <div class="section-label">Seccion 4 de 5</div>
+  <!-- ======================== -->
+  <div class="section" id="s4">
+    <div class="section-tag">Seccion 4 de 5</div>
     <div class="section-title">¿Entiendes lo que recibes — o hay cosas que te confunden?</div>
-    <div class="section-desc">Algunos nombres tecnicos pueden generar mas confuision que claridad. Dinos lo que no entiendes — eso es igual de valioso que lo que si entiendes.</div>
+    <div class="section-desc">Dinos lo que no entiendes — eso es igual de valioso que lo que si entiendes.</div>
 
     <div class="q">
       <span class="q-code">4.1</span>
-      <p class="q-text">¿Que son los "creditos de plastico CSR26" y para que sirven?</p>
-      <p class="q-hint">Marca lo que mejor describe tu nivel de comprension ahora mismo.</p>
+      <p class="q-text">¿Que son los creditos de plastico CSR26 y para que sirven?</p>
       <div class="choice-list">
-        <button class="choice-item" onclick="pick(this,'4.1')">No tengo ni idea de que es eso</button>
-        <button class="choice-item" onclick="pick(this,'4.1')">He escuchado algo pero no lo entiendo bien</button>
-        <button class="choice-item" onclick="pick(this,'4.1')">Lo entiendo en lineas generales pero no sabria explicarlo</button>
-        <button class="choice-item" onclick="pick(this,'4.1')">Lo entiendo y sabria explicarselo a alguien</button>
+        <button class="choice-btn" onclick="pick(this,'4_1')">No tengo ni idea de que es eso</button>
+        <button class="choice-btn" onclick="pick(this,'4_1')">He escuchado algo pero no lo entiendo bien</button>
+        <button class="choice-btn" onclick="pick(this,'4_1')">Lo entiendo en lineas generales pero no sabria explicarlo</button>
+        <button class="choice-btn" onclick="pick(this,'4_1')">Lo entiendo y sabria explicarselo a alguien</button>
       </div>
     </div>
 
     <div class="q">
       <span class="q-code">4.2</span>
       <p class="q-text">¿Cuanto te preocupa no entender aun como funcionan los creditos de plastico?</p>
+      <p class="q-hint">1 = Nada, ya lo entiendo · 5 = Me frena para entrar</p>
       <div class="scale-row">
-        <button class="scale-btn" onclick="pickScale(this,'4.2')" data-v="1">1</button>
-        <button class="scale-btn" onclick="pickScale(this,'4.2')" data-v="2">2</button>
-        <button class="scale-btn" onclick="pickScale(this,'4.2')" data-v="3">3</button>
-        <button class="scale-btn" onclick="pickScale(this,'4.2')" data-v="4">4</button>
-        <button class="scale-btn" onclick="pickScale(this,'4.2')" data-v="5">5</button>
+        <button class="scale-btn" onclick="sc(this,'4_2')">1</button>
+        <button class="scale-btn" onclick="sc(this,'4_2')">2</button>
+        <button class="scale-btn" onclick="sc(this,'4_2')">3</button>
+        <button class="scale-btn" onclick="sc(this,'4_2')">4</button>
+        <button class="scale-btn" onclick="sc(this,'4_2')">5</button>
       </div>
-      <div class="scale-labels-row"><span>Nada — ya lo entiendo</span><span>Me frena para entrar</span></div>
-      <div class="scale-feedback" id="sf-4.2"></div>
+      <div class="scale-ends"><span>No me preocupa</span><span>Me frena</span></div>
+      <div class="scale-desc" id="sd-4_2"></div>
     </div>
 
     <div class="q">
       <span class="q-code">4.3</span>
       <p class="q-text">"Tu Gestor de Pagos: Cobra a tus Clientes sin Complicaciones" — ¿entiendes que es exactamente esto?</p>
       <div class="choice-list">
-        <button class="choice-item" onclick="pick(this,'4.3')">Si, entiendo que es una plataforma donde mis clientes pagan con tarjeta y yo recibo mi comision</button>
-        <button class="choice-item" onclick="pick(this,'4.3')">Mas o menos — entiendo que facilita el pago pero no se exactamente como funciona</button>
-        <button class="choice-item" onclick="pick(this,'4.3')">No, el nombre no me dice nada claro</button>
-        <button class="choice-item" onclick="pick(this,'4.3')">Entiendo que existe pero no entiendo por que lo necesito</button>
+        <button class="choice-btn" onclick="pick(this,'4_3')">Si, es una plataforma donde mis clientes pagan con tarjeta y yo recibo mi comision</button>
+        <button class="choice-btn" onclick="pick(this,'4_3')">Mas o menos — entiendo que facilita el pago pero no se como funciona exactamente</button>
+        <button class="choice-btn" onclick="pick(this,'4_3')">No, el nombre no me dice nada claro</button>
+        <button class="choice-btn" onclick="pick(this,'4_3')">Entiendo que existe pero no entiendo por que lo necesito</button>
       </div>
     </div>
 
     <div class="q">
       <span class="q-code">4.4</span>
       <p class="q-text">"Licencia Comercial de Afiliado" — ¿que crees que es este componente?</p>
-      <p class="q-hint">Escribe con tus propias palabras lo que crees que es. No hay respuesta correcta.</p>
-      <textarea class="open-textarea" placeholder="Lo que crees que es una licencia comercial en este contexto..."></textarea>
+      <p class="q-hint">Escribe con tus propias palabras lo que crees que es.</p>
+      <textarea id="licencia" class="open-input" placeholder="Lo que crees que es una licencia comercial en este contexto..."></textarea>
     </div>
 
     <div class="q">
       <span class="q-code">4.5</span>
-      <p class="q-text">"Tu Alta Oficial en el Negocio" — ¿entiende que significa esto dentro de la oferta?</p>
-      <div class="choice-list">
-        <button class="choice-item" onclick="pick(this,'4.5')">Si — me activan mi cuenta en Corsair Connect para que pueda operar</button>
-        <button class="choice-item" onclick="pick(this,'4.5')">Creo que si pero no estoy seguro de que implica exactamente</button>
-        <button class="choice-item" onclick="pick(this,'4.5')">No — el nombre me suena oficial pero no se que recibi exactamente</button>
-        <button class="choice-item" onclick="pick(this,'4.5')">Me genera desconfianza — "alta oficial" suena a algo que deberia ser gratis</button>
-      </div>
-    </div>
-
-    <div class="q">
-      <span class="q-code">4.6</span>
-      <p class="q-text">¿Hay algun nombre o termino de la oferta que te confunda, te suene a jerga tecnica o que directamente no entiendas?</p>
-      <textarea class="open-textarea" placeholder="Nombra los terminos o componentes que no te quedan claros..."></textarea>
+      <p class="q-text">¿Hay algun nombre o termino del sistema que te confunda o que no entiendas?</p>
+      <textarea id="terminos" class="open-input" placeholder="Nombra los terminos o componentes que no te quedan claros..."></textarea>
     </div>
   </div>
 
   <hr class="divider">
 
-  <!-- ===================== -->
+  <!-- ======================== -->
   <!-- SECCION 5: PRIORIZACION -->
-  <!-- ===================== -->
-  <div class="block" id="sec5">
-    <div class="section-label">Seccion 5 de 5</div>
+  <!-- ======================== -->
+  <div class="section" id="s5">
+    <div class="section-tag">Seccion 5 de 5</div>
     <div class="section-title">Si pudieras elegir — ¿que te salvaria la vida?</div>
-    <div class="section-desc">Esta es la seccion mas importante del cuestionario. Tomate tu tiempo.</div>
+    <div class="section-desc">La seccion mas importante del cuestionario. Tomate tu tiempo.</div>
 
     <div class="q">
       <span class="q-code">5.1</span>
-      <p class="q-text">De todos los componentes de la oferta, ¿cuales son los 3 que mas te importan — los que por si solos justificarian los $17?</p>
-      <p class="q-hint">Marca exactamente 3. Si marcas mas o menos, no podemos procesar bien tu respuesta.</p>
+      <p class="q-text">De todos los componentes, ¿cuales son los 3 que mas te importan — los que por si solos justificarian los $17?</p>
+      <p class="q-hint">Marca exactamente 3.</p>
       <div class="multi-hint">Marca exactamente 3</div>
       <div class="choice-list" id="top3list">
-        <button class="choice-item multi" onclick="toggleTop3(this)">Sistema A-Z paso a paso</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">El Mapa de 14 Dias (plan diario)</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Guia de la Lista de 100 Contactos</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Kit de Mensajes y Materiales Listos</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Guia de Respuesta a Objeciones</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Sistema de Cierre Automatico (landing personalizada)</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Gestor de Pagos (cobrar con tarjeta)</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Alta Oficial en Corsair Connect</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Licencia Comercial de Afiliado</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Formacion Completa del Negocio</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Asistente Personal 24/7</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Acelerador de Primera Venta (sesion en directo)</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">La Comunidad del Reto</button>
-        <button class="choice-item multi" onclick="toggleTop3(this)">Panel de Progreso (dashboard)</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Sistema A-Z paso a paso</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">El Mapa de 14 Dias</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Guia de la Lista de 100 Contactos</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Kit de Mensajes y Materiales Listos</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Guia de Respuesta a Objeciones</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Sistema de Cierre Automatico</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Gestor de Pagos para tus clientes</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Alta Oficial en Corsair Connect</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Licencia Comercial de Afiliado</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Formacion Completa del Negocio</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Asistente Personal 24/7</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Sesion en directo semanal</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">La Comunidad del Reto</button>
+        <button class="choice-btn" onclick="toggleTop3(this)">Panel de Progreso</button>
       </div>
-      <div id="top3counter" style="margin-top:8px;font-size:12px;font-family:'Courier New',monospace;color:#aaa;">0 de 3 seleccionados</div>
+      <div class="top3-counter" id="top3counter">0 de 3 seleccionados</div>
     </div>
 
     <div class="q">
       <span class="q-code">5.2</span>
-      <p class="q-text">Ahora la pregunta opuesta: ¿hay algun componente que te parezca irrelevante, que no necesites o que no entiendas para que sirve?</p>
-      <p class="q-hint">Marca todos los que apliquen.</p>
+      <p class="q-text">¿Hay algun componente que te parezca irrelevante o que no entiendas para que sirve?</p>
       <div class="multi-hint">Puedes marcar varios</div>
       <div class="choice-list">
-        <button class="choice-item multi" onclick="toggleMulti(this,'5.2')">El Panel de Progreso — no necesito un dashboard para saber como voy</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'5.2')">La Licencia Comercial — no entiendo por que es un "componente"</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'5.2')">El Asistente 24/7 — prefiero hablar con personas reales</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'5.2')">La Comunidad del Reto — los grupos no me motivan</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'5.2')">El Mapa de 14 Dias — prefiero ir a mi ritmo</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'5.2')">La Guia de Contactos — ya se a quien contactar</button>
-        <button class="choice-item multi" onclick="toggleMulti(this,'5.2')">Ninguno — todos me parecen utiles</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'5_2')">El Panel de Progreso — no necesito un dashboard</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'5_2')">La Licencia Comercial — no entiendo por que es un componente</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'5_2')">El Asistente 24/7 — prefiero hablar con personas reales</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'5_2')">La Comunidad del Reto — los grupos no me motivan</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'5_2')">El Mapa de 14 Dias — prefiero ir a mi ritmo</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'5_2')">La Guia de Contactos — ya se a quien contactar</button>
+        <button class="choice-btn" onclick="toggleMulti(this,'5_2')">Ninguno — todos me parecen utiles</button>
       </div>
     </div>
 
     <div class="q">
       <span class="q-code">5.3</span>
-      <p class="q-text">Si pudieras anadir UN componente que no esta en la oferta y que te haria decir "con eso ya compro seguro", ¿cual seria?</p>
-      <textarea class="open-textarea tall" placeholder="Puede ser algo muy concreto: una garantia especifica, un tipo de soporte, una prueba de algo, acceso a algo, una sesion 1 a 1... lo que sea."></textarea>
+      <p class="q-text">Si pudieras anadir UN componente que no esta en el sistema y que te haria decir "con eso ya compro seguro", ¿cual seria?</p>
+      <textarea id="componente_extra" class="open-input tall" placeholder="Puede ser algo muy concreto: una garantia, un tipo de soporte, una prueba de algo..."></textarea>
     </div>
 
     <div class="q">
       <span class="q-code">5.4</span>
-      <p class="q-text">¿Hay algo en la oferta actual que te haga desconfiar o que sientas que falta por explicar para que puedas comprar sin dudas?</p>
-      <textarea class="open-textarea tall" placeholder="Escribe con total libertad. Esta respuesta es la que mas nos ayuda a mejorar."></textarea>
+      <p class="q-text">¿Hay algo en la oferta actual que te haga desconfiar o que sientas que falta por explicar?</p>
+      <textarea id="desconfianza2" class="open-input tall" placeholder="Escribe con total libertad..."></textarea>
     </div>
 
     <div class="q">
       <span class="q-code">5.5</span>
       <p class="q-text">En una sola frase: ¿que tendria que pasar para que te dieses de alta en El Reto de los $600 esta misma semana sin pensartelo dos veces?</p>
-      <textarea class="open-textarea tall" placeholder="Escribe la condicion o el argumento que te haria decir si de inmediato..."></textarea>
+      <textarea id="condicion_entrada" class="open-input tall" placeholder="Escribe la condicion o el argumento que te haria decir si de inmediato..."></textarea>
     </div>
   </div>
 
-  <!-- SUBMIT -->
-  <div class="submit-area">
-    <button class="submit-btn" onclick="submitForm()">Enviar mis respuestas</button>
-    <p class="submit-note">Tus respuestas son anonimas y se usan solo para mejorar el sistema.</p>
-  </div>
+  <button class="submit-btn" id="submitBtn" onclick="enviar()">Apuntarme a la lista de espera</button>
+  <div class="sending-msg" id="sendingMsg">Enviando tus respuestas...</div>
+  <div class="error-msg" id="errorMsg">Hubo un error al enviar. Por favor intentalo de nuevo.</div>
+  <p class="submit-note">Tus respuestas son anonimas y se usan solo para mejorar el sistema antes del lanzamiento.</p>
 
 </div>
 
-<!-- SUCCESS -->
-<div class="success-screen" id="successScreen">
-  <h2>Muchas gracias.</h2>
-  <p>Tus respuestas nos llegan directamente.<br>Las usaremos para mejorar el sistema antes del lanzamiento.<br><br>Estaremos en contacto contigo muy pronto.</p>
+<div class="success" id="success">
+  <h2>Ya estas en la lista de espera.</h2>
+  <p>Tus respuestas nos llegan directamente.<br>Las usaremos para mejorar el sistema antes de abrir el Reto.<br><br>Estaremos en contacto contigo muy pronto.</p>
 </div>
 
 <script>
-const SCALE_DESCS = {
-  1: "No me alivia — este no es mi problema",
-  2: "Me alivia un poco pero no es lo que mas necesito",
-  3: "Es util — resuelve algo que me preocupaba",
-  4: "Me alivia mucho — esto si lo necesito",
-  5: "Esto solo ya justifica los $17"
+// ─── PON AQUI TU URL DE APPS SCRIPT ──────────────────────────────────────
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQbASsucwcoLARrMpgfqGTBFOqj-xx-VAhuEHogORECqGujGt7fweJn8_w6df8kT7u/exec';
+// ─────────────────────────────────────────────────────────────────────────
+
+const SCALE_TEXTS = {
+  1: "1 — No me alivia / no es mi problema",
+  2: "2 — Me alivia un poco",
+  3: "3 — Es util, resuelve algo que me preocupaba",
+  4: "4 — Me alivia mucho, esto si lo necesito",
+  5: "5 — Esto solo ya justifica los $17"
 };
 
-const SCALE_DESCS_2 = {
-  1: "No me preocupa nada",
-  2: "Me preocupa un poco",
-  3: "Me genera bastante duda",
-  4: "Me frena bastante",
-  5: "Me frena totalmente para entrar"
-};
+const R = {};
+const multiSelections = {};
 
 function pick(btn, id) {
-  const parent = btn.closest('.choice-list');
-  parent.querySelectorAll('.choice-item:not(.multi)').forEach(b => b.classList.remove('sel'));
+  btn.closest('.choice-list').querySelectorAll('.choice-btn').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
+  R[id] = btn.textContent.trim();
 }
 
 function pickPrice(btn, id) {
-  const parent = btn.closest('.price-choice-list');
-  parent.querySelectorAll('.price-choice').forEach(b => b.classList.remove('sel'));
+  btn.closest('.price-choice-list').querySelectorAll('.price-choice').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
+  R[id] = btn.textContent.trim();
 }
 
-function pickScale(btn, id) {
-  const v = parseInt(btn.dataset.v);
-  const parent = btn.closest('.scale-row');
-  parent.querySelectorAll('.scale-btn').forEach(b => {
-    b.classList.remove('s1','s2','s3','s4','s5');
-  });
-  btn.classList.add('s' + v);
-  const fb = document.getElementById('sf-' + id);
-  if (fb) {
-    const descs = id === '4.2' ? SCALE_DESCS_2 : SCALE_DESCS;
-    fb.textContent = descs[v];
-  }
+function sc(btn, id) {
+  const v = parseInt(btn.textContent.trim());
+  btn.closest('.scale-row').querySelectorAll('.scale-btn').forEach(b => b.classList.remove('v1','v2','v3','v4','v5'));
+  btn.classList.add('v' + v);
+  const el = document.getElementById('sd-' + id);
+  if (el) el.textContent = SCALE_TEXTS[v];
+  R[id] = v;
 }
 
 function toggleMulti(btn, id) {
   btn.classList.toggle('sel');
+  if (!multiSelections[id]) multiSelections[id] = [];
+  const text = btn.textContent.trim();
+  const idx = multiSelections[id].indexOf(text);
+  if (idx === -1) multiSelections[id].push(text);
+  else multiSelections[id].splice(idx, 1);
+  R[id] = multiSelections[id].join(' | ');
 }
 
-let top3count = 0;
 function toggleTop3(btn) {
   const already = btn.classList.contains('sel');
-  const selected = document.querySelectorAll('#top3list .choice-item.sel').length;
+  const selected = document.querySelectorAll('#top3list .choice-btn.sel').length;
+  const counter = document.getElementById('top3counter');
+
   if (!already && selected >= 3) {
-    const counter = document.getElementById('top3counter');
     counter.textContent = 'Maximo 3. Deselecciona uno antes de elegir otro.';
-    counter.style.color = '#b02020';
+    counter.className = 'top3-counter warn';
     setTimeout(() => {
-      counter.textContent = '3 de 3 seleccionados';
-      counter.style.color = '#2a5a0a';
+      const n = document.querySelectorAll('#top3list .choice-btn.sel').length;
+      counter.textContent = n + ' de 3 seleccionados';
+      counter.className = 'top3-counter' + (n === 3 ? ' ok' : '');
     }, 2000);
     return;
   }
   btn.classList.toggle('sel');
-  const count = document.querySelectorAll('#top3list .choice-item.sel').length;
-  const counter = document.getElementById('top3counter');
+  const count = document.querySelectorAll('#top3list .choice-btn.sel').length;
   counter.textContent = count + ' de 3 seleccionados';
-  counter.style.color = count === 3 ? '#2a5a0a' : '#aaa';
+  counter.className = 'top3-counter' + (count === 3 ? ' ok' : '');
+
+  // Guardar seleccion
+  const seleccionados = Array.from(document.querySelectorAll('#top3list .choice-btn.sel')).map(b => b.textContent.trim());
+  R['5_1_top3'] = seleccionados.join(' | ');
 }
 
-function submitForm() {
-  document.getElementById('formContainer').style.display = 'none';
-  document.getElementById('successScreen').style.display = 'block';
-  window.scrollTo(0, 0);
+function collectTextFields() {
+  const campos = {
+    'pais': 'pais',
+    'desconfianza': 'desconfianza_componente',
+    'licencia': 'licencia_definicion',
+    'terminos': 'terminos_confusos',
+    'componente_extra': 'componente_extra',
+    'desconfianza2': 'desconfianza_oferta',
+    'condicion_entrada': 'condicion_entrada'
+  };
+  Object.keys(campos).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) R[campos[id]] = el.value.trim();
+  });
 }
 
-// Update progress on scroll
-const sections = ['sec1','sec2','sec3','sec4','sec5'];
+function enviar() {
+  collectTextFields();
+
+  const btn = document.getElementById('submitBtn');
+  const sending = document.getElementById('sendingMsg');
+  const errMsg = document.getElementById('errorMsg');
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  sending.style.display = 'block';
+  errMsg.style.display = 'none';
+
+  R['timestamp'] = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
+  R['formulario'] = 'Lista de Espera Reto 600';
+
+  const callbackName = 'cb_' + Date.now();
+  const scriptEl = document.createElement('script');
+
+  window[callbackName] = function(response) {
+    delete window[callbackName];
+    if (document.body.contains(scriptEl)) document.body.removeChild(scriptEl);
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+    window.scrollTo(0, 0);
+  };
+
+  scriptEl.onerror = function() {
+    delete window[callbackName];
+    btn.disabled = false;
+    btn.textContent = 'Apuntarme a la lista de espera';
+    sending.style.display = 'none';
+    errMsg.style.display = 'block';
+  };
+
+  const params = encodeURIComponent(JSON.stringify(R));
+  scriptEl.src = APPS_SCRIPT_URL + '?callback=' + callbackName + '&data=' + params;
+  document.body.appendChild(scriptEl);
+}
+
+// Barra de progreso
+const sections = ['s1','s2','s3','s4','s5'];
 const pcts = [20, 40, 60, 80, 100];
 const labels = ['Seccion 1 de 5','Seccion 2 de 5','Seccion 3 de 5','Seccion 4 de 5','Seccion 5 de 5'];
 
@@ -830,12 +707,10 @@ window.addEventListener('scroll', () => {
   let active = 0;
   sections.forEach((id, i) => {
     const el = document.getElementById(id);
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top <= window.innerHeight * 0.5) active = i;
+    if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.45) active = i;
   });
-  document.getElementById('progressFill').style.width = pcts[active] + '%';
-  document.getElementById('progressLabel').textContent = labels[active];
+  document.getElementById('progFill').style.width = pcts[active] + '%';
+  document.getElementById('progLabel').textContent = labels[active];
 });
 </script>
 </body>
